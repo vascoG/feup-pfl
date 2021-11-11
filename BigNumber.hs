@@ -1,6 +1,11 @@
---2.1
+--2.1 duvida nesta
 type BigNumber = [Int]
---2.2
+--2.2 --ver a trasnformaçãoi de char para int e ver casos de erro
+scanner :: String -> BigNumber
+scanner []=[]
+scanner (x:xs) = x:(scanner xs)
+
+--2.4
 somaBN :: BigNumber -> BigNumber -> BigNumber
 somaBN x y = reverse(somaBNAux (reverse x) (reverse y))
 
@@ -10,7 +15,8 @@ somaBNAux [] y = y
 somaBNAux (x:xs) (y:ys)
   | x+y>=10 = (x+y-10):somaBNAux (somaBNAux xs [1]) ys
   | otherwise = (x+y):somaBNAux xs ys
---2.3
+
+--2.5
 
 subBN :: BigNumber -> BigNumber -> BigNumber
 subBN x y = removeZero (reverse(subBNAux (reverse x) (reverse y)))
@@ -27,7 +33,4 @@ removeZero (x:xs)
   | x==0 = removeZero xs
   | otherwise = (x:xs)
 
---2.4
-mulBN :: BigNumber -> BigNumber -> BigNumber
-mulBN x y
-  
+--2.6
