@@ -53,39 +53,7 @@ intToChar 8 = '8'
 intToChar 9 = '9'
 intToChar _ = error("Erro a converter um número num carácter")
 
---2.4
-somaBN :: BigNumber -> BigNumber -> BigNumber
-somaBN x y = reverse(somaBNAux (reverse x) (reverse y))
-
-somaBNAux :: BigNumber -> BigNumber -> BigNumber
-somaBNAux x [] = x
-somaBNAux [] y = y
-somaBNAux (x:xs) (y:ys)
-  | x+y>=10 = (x+y-10):somaBNAux (somaBNAux xs [1]) ys
-  | otherwise = (x+y):somaBNAux xs ys
-
---2.5
-
---casos teste, 6-5 = 1, 5-6 = -1, 15-6 = 9, 6-15 = -9, 25-6 = 19, 6-25 = -19, 25-26=-1 (falta confirmar com a subbnteste)
--- a ideia é se o 2ºBN for maior que o primeiro BN, fazer a conta ao contrario e acrescentar um -
--- casos a falhar: 25-(-25) (funciona com subbnteste)  [-5] - [9] = [-14]? falta confirmar na soma se x+y-10 é menor que -9
--- A - B = A + (-B) :D (subbnteste)
-
-subBnTeste :: BigNumber -> BigNumber -> BigNumber
-subBnTeste x y = somaBN x (adicionaSinal y)
-
-subBN :: BigNumber -> BigNumber -> BigNumber
-subBN x y
-  | maiorQue x y = removeZero $ reverse $ subBNAux (reverse x) (reverse y)
-  | otherwise = adicionaSinal $ removeZero $ reverse $ subBNAux (reverse y) (reverse x)
-
-subBNAux :: BigNumber -> BigNumber -> BigNumber
-subBNAux x [] = x
-subBNAux [] y = y
-subBNAux (x:xs) (y:ys)
-  | y>x = (x-y+10):subBNAux xs (somaBNAux ys [1])
-  | otherwise = (x-y):subBNAux xs ys
-
+--Funções auxiliares para os restantes exercícios
 removeZero :: BigNumber -> BigNumber
 removeZero (x:xs)
   | xs == [] = [x]
@@ -99,7 +67,6 @@ maiorQue (x:xs) (y:ys)
   | x > y = True
   | y > x = False
   | x == y && xs == [] = False
-  | x == y && x < 0 = maiorQue ys xs
   | otherwise = maiorQue xs ys
   where
     lenX = length (x:xs)
@@ -108,4 +75,51 @@ maiorQue (x:xs) (y:ys)
 adicionaSinal :: BigNumber -> BigNumber
 adicionaSinal (x:xs) = (-x:xs)
 
+--2.4
+somaBN :: BigNumber -> BigNumber -> BigNumber
+somaBN x [] = x
+somaBN [] y = y
+somaBN (x:xs) (y:ys)
+  | x < 0 && y < 0 = adicionaSinal $ removeZero $ reverse $ somaBNAux (reverse(-x:xs)) (reverse(-y:ys))
+  | x >= 0 && y >= 0 = removeZero $ reverse $ somaBNAux (reverse (x:xs)) (reverse (y:ys))
+  | otherwise = if maiorQue (abs x:xs) (abs y:ys) then somaBNAux1 (x:xs) (y:ys) else somaBNAux1 (y:ys) (x:xs)
+
+somaBNAux :: BigNumber -> BigNumber -> BigNumber
+somaBNAux x [] = x
+somaBNAux [] y = y
+somaBNAux (x:xs) (y:ys)
+  | x+y>=10 = (x+y-10):somaBNAux (somaBNAux xs [1]) ys
+  | otherwise = (x+y):somaBNAux xs ys
+
+somaBNAux1 :: BigNumber -> BigNumber -> BigNumber
+somaBNAux1 (x:xs) (y:ys)
+  | x < 0 = adicionaSinal $ removeZero $ reverse $ subtrairBNAbs (reverse(abs x:xs)) (reverse(abs y:ys))
+  | otherwise =  removeZero $ reverse $ subtrairBNAbs (reverse(abs x:xs)) (reverse(abs y:ys))
+
+subtrairBNAbs :: BigNumber -> BigNumber -> BigNumber
+subtrairBNAbs [] l = l
+subtrairBNAbs l [] = l
+subtrairBNAbs (x:xs) (y:ys)
+  | x - y < 0 = (x - y + 10):subtrairBNAbs (subtrairBNAbs xs [1]) ys
+  | otherwise = (x - y):subtrairBNAbs xs ys
+
+--2.5 A - B = A + (-B)
+subBN :: BigNumber -> BigNumber -> BigNumber
+subBN x y = somaBN x (adicionaSinal y)
+
 --2.6
+mulBN :: BigNumber -> BigNumber -> BigNumber
+mulBN x y = reverse $ mulBNAux1 $ mulBNAux (reverse x) (reverse y)
+
+mulBNAux :: BigNumber -> BigNumber -> BigNumber
+mulBNAux (x:[]) ys = escalaBN x ys
+mulBNAux (x:xs) ys = somaBNAux (escalaBN x ys) (mulBNAux xs (0:ys))
+
+escalaBN :: Int -> BigNumber -> BigNumber
+escalaBN n x = map (n*) x
+
+mulBNAux1 :: BigNumber -> BigNumber
+mulBNAux1 [] = []
+mulBNAux1 (x:xs)
+  | x >= 10 = (mod x 10):mulBNAux1 (somaBNAux xs [div x 10])
+  | otherwise = x:mulBNAux1 xs
