@@ -1,3 +1,4 @@
+module BigNumber where
 --1 - cada soluçao tem de ser mais eficiente que a anterior, testar casos limites, 5+5 = 10, 5-6=-1, criar um ficheiro auxiliar com testes usando IO()
 --2 atençao aos numeros negativos
 -- zip aos ficheiros e nao a pasta externa
@@ -109,7 +110,11 @@ subBN x y = somaBN x (adicionaSinal y)
 
 --2.6
 mulBN :: BigNumber -> BigNumber -> BigNumber
-mulBN x y = reverse $ mulBNAux1 $ mulBNAux (reverse x) (reverse y)
+mulBN [] _ = []
+mulBN _ [] = []
+mulBN (x:xs) (y:ys)
+  | (x<0 && y<0) || (x>=0 && y>=0) = reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
+  | otherwise = adicionaSinal $ reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
 
 mulBNAux :: BigNumber -> BigNumber -> BigNumber
 mulBNAux (x:[]) ys = escalaBN x ys
@@ -123,3 +128,5 @@ mulBNAux1 [] = []
 mulBNAux1 (x:xs)
   | x >= 10 = (mod x 10):mulBNAux1 (somaBNAux xs [div x 10])
   | otherwise = x:mulBNAux1 xs
+
+--2.7

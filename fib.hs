@@ -1,3 +1,5 @@
+import BigNumber
+
 {-1.1 Função recursiva
     F0 = 1
     F1 = 1
@@ -8,7 +10,7 @@ fibRec 0 = 0
 fibRec 1 = 1
 fibRec n = fibRec (n-1) + fibRec (n-2)
 
-{-1.2 Função com programação dinámica
+{-1.2 Função com programação dinâmica
   lista !! 0 = 0
   lista !! 1 = 1
   lista !! 2 = (lista !! 1) + (lista !! 0) = 0 + 1 = 1
@@ -22,3 +24,27 @@ fibLista i = lista !! i where lista = 0:1:[lista !! (x-1) + (lista !! (x-2)) | x
 -}
 fibListaInfinita :: Int -> Int
 fibListaInfinita n = lista !! n where lista = 0:1:(zipWith(+) lista (tail lista))
+
+
+--3.1 Função recursiva BN
+fibRecBN :: BigNumber -> BigNumber
+fibRecBN [0] = [0]
+fibRecBN [1] = [1]
+fibRecBN n = somaBN (fibRecBN (subBN n [1])) (fibRecBN (subBN n [2]))
+
+--3.2 Função com programação dinâmica BN
+fibListaBN :: BigNumber -> BigNumber
+fibListaBN i = lista @@ i where lista = [0]:[1]:[somaBN (lista @@ (subBN x [1])) (lista @@ (subBN x [2])) | x<-(listRange [2] i)]
+
+(@@) :: [BigNumber] -> BigNumber -> BigNumber
+(@@) l (y:[]) = l !! y
+(@@) l n = (@@) (drop 10 l) (subBN n [1,0])
+
+listRange :: BigNumber -> BigNumber -> [BigNumber]
+listRange a b
+  | subBN a b == [0] = [b]
+  | otherwise = [a] ++ listRange (somaBN a [1]) b
+
+--3.3 Função com lista infinita BN
+fibListaInfinitaBN :: BigNumber -> BigNumber
+fibListaInfinitaBN n = lista @@ n where lista = [0]:[1]:(zipWith(somaBN) lista (tail lista))
