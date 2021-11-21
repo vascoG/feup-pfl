@@ -26,13 +26,13 @@ fibListaInfinita :: Int -> Int
 fibListaInfinita n = lista !! n where lista = 0:1:(zipWith(+) lista (tail lista))
 
 
---3.1 Função recursiva BN
+--3.1 Função recursiva com BigNumber
 fibRecBN :: BigNumber -> BigNumber
 fibRecBN [0] = [0]
 fibRecBN [1] = [1]
 fibRecBN n = somaBN (fibRecBN (subBN n [1])) (fibRecBN (subBN n [2]))
 
---3.2 Função com programação dinâmica BN
+--3.2 Função com programação dinâmica com BigNumber
 fibListaBN :: BigNumber -> BigNumber
 fibListaBN i = lista @@ i where lista = [0]:[1]:[somaBN (lista @@ (subBN x [1])) (lista @@ (subBN x [2])) | x<-(listRange [2] i)]
 
@@ -45,6 +45,6 @@ listRange a b
   | subBN a b == [0] = [b]
   | otherwise = [a] ++ listRange (somaBN a [1]) b
 
---3.3 Função com lista infinita BN
+--3.3 Função com lista infinita com BigNumber
 fibListaInfinitaBN :: BigNumber -> BigNumber
 fibListaInfinitaBN n = lista @@ n where lista = [0]:[1]:(zipWith(somaBN) lista (tail lista))
