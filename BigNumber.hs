@@ -130,3 +130,14 @@ mulBNAux1 (x:xs)
   | otherwise = x:mulBNAux1 xs
 
 --2.7
+divBN :: BigNumber -> BigNumber -> (BigNumber,BigNumber)
+divBN x y
+  | maiorQue y [0] = (reverse (fst z),snd z)
+  | otherwise = error("Não é possível fazer essa divisão!")
+  where z = divBNAux x y ([0],[0])
+
+
+divBNAux :: BigNumber -> BigNumber -> (BigNumber,BigNumber) -> (BigNumber,BigNumber)
+divBNAux x y z
+  | (maiorQue y x) = (fst z,x)
+  | otherwise = divBNAux (subBN x y) y (somaBNAux (fst z) [1],snd z)
