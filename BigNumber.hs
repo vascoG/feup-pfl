@@ -5,12 +5,7 @@ module BigNumber where
 
 --2.1 duvida nesta
 type BigNumber = [Int]
-{-
-2.2. Esta função recebe uma string e retorna a converção da mesma para BigNumber
-Utiliza duas funções auxiliares, "scanner'" que converte a cabeça da lista para inteiro,
-com a ajuda da segunda função auxiliar "charToInt" que faz a conversão de cada string possível para o inteiro que corresponde.
-FAZER AQUI A DOCUMENTAÇÃO DAS AUXILIARES OU CADA UMA EM INDIVIDUAL
--}
+--2.2. Função scanner, converte uma String em BigNumber
 -- Era nice ter um limpador para tirar os 0 a esquerda no fim
 scanner :: String -> BigNumber
 scanner []=[]
@@ -36,12 +31,7 @@ charToInt '8' = 8
 charToInt '9' = 9
 charToInt _ = error("Erro a converter um carácter num número")
 
-{-
-2.3.
-Esta função recebe um BigNumber e retorna a converção do mesmo para string.
-Utiliza duas funções auxiliares, "output'" que converte a cabeça da lista através da segunda função auxiliar
-"intToChar" e chama recursivamente a si propria de forma a converter a lista completa.
--}
+--2.3. Função output, converte um BigNumber numa String
 output :: BigNumber -> String
 output [] = []
 output (x:xs)
@@ -66,16 +56,14 @@ intToChar 9 = '9'
 intToChar _ = error("Erro a converter um número num carácter")
 
 --Funções auxiliares para os restantes exercícios
---Remove os zeros à esquerda
+
 removeZero :: BigNumber -> BigNumber
 removeZero (x:xs)
   | xs == [] = [x]
   | x==0 = removeZero xs
   | otherwise = (x:xs)
 
-{-verifica qual a lista maior entre as duas que recebe,
-retorna True se a primeira for maior e false se for menor.
--}
+
 maiorQue :: BigNumber -> BigNumber -> Bool
 maiorQue (x:xs) (y:ys)
   | lenX > lenY = True
@@ -87,14 +75,11 @@ maiorQue (x:xs) (y:ys)
   where
     lenX = length (x:xs)
     lenY = length (y:ys)
---Adiciona o sinal negativo ao bigNumber
+
 adicionaSinal :: BigNumber -> BigNumber
 adicionaSinal (x:xs) = (-x:xs)
-{-
-2.4. Esta função calcula a soma entre 2 BigNumbers.
-Utiliza 3 funções auxiliares "somaBNAux", "somaBNAux1" e "subtrairBNAbs"
-de forma a calcular a soma de maneira correta para todos os casos possíveis
--}
+
+--2.4. Função somaBN, calcula a soma de 2 BigNumbers
 
 somaBN :: BigNumber -> BigNumber -> BigNumber
 somaBN x [] = x
@@ -123,17 +108,12 @@ subtrairBNAbs (x:xs) (y:ys)
   | x - y < 0 = (x - y + 10):subtrairBNAbs (subtrairBNAbs xs [1]) ys
   | otherwise = (x - y):subtrairBNAbs xs ys
 
-{- A - B = A + (-B)
-2.5. Esta função calcula a subtração entre 2 BigNumbers.
-A subtração é calculada através da soma entre primeiro número e o simétrico do segundo
--}
+-- A - B = A + (-B)
+--2.5 Função subBN, calcula a subtração de dois BigNumbers
 subBN :: BigNumber -> BigNumber -> BigNumber
 subBN x y = somaBN x (adicionaSinal y)
 
-{-
-2.6. Esta função calcula a multiplicação entre 2 BigNumbers.
-Utiliza 3 funções auxiliares "mulBNAux", "mulBNAux1" e "escalaBN"
--}
+--2.6 Função mulBN, calcula a multiplicação de dois BigNumbers.
 mulBN :: BigNumber -> BigNumber -> BigNumber
 mulBN [] _ = []
 mulBN _ [] = []
@@ -154,10 +134,7 @@ mulBNAux1 (x:xs)
   | x >= 10 = (mod x 10):mulBNAux1 (somaBNAux xs [div x 10])
   | otherwise = x:mulBNAux1 xs
 
-{-
-2.7. Esta função calcula a divisão entre 2 BigNumbers
-Utiliza uma função auxiliar "divBNAux"
--}
+--2.7 Função divBN, calcula a divisão de dois BigNumbers
 divBN :: BigNumber -> BigNumber -> (BigNumber,BigNumber)
 divBN x y
   | maiorQue y [0] = (reverse (fst z),snd z)
