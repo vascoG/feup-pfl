@@ -50,7 +50,7 @@
 > Estratégias utilizadas na implementação das funções da alínea 2
 
 
-  <p>Na alínea 2, de forma a garantir que só trabalhávamos com BigNumbers nas funções implementadas, criamos uma função verificaBN, que só aceita números de 0 a 9 em cada elemento da lista e apenas o primeiro elemento pode ter valores negativos. Assim, chamamos esta função em todas as funções principais do nosso trabalho.</p>
+  <p>Na alínea 2, decidimos representar os BigNumber como uma lista de Int usando o type. Assim, de forma a garantir que só trabalhávamos com BigNumbers nas funções implementadas, criamos uma função verificaBN, que só aceita números de 0 a 9 em cada elemento da lista e apenas o primeiro elemento pode ter valores negativos. Assim, chamamos esta função em todas as funções principais do nosso trabalho, exceto na <i>scanner</i> e no <i>output</i> que fazem a verificação enquanto convertem.</p>
   <p> Para o cálculo da soma de dois BigNumbers a estratégia utilizada foi </p>
   <p> Para o cálculo da subtração de dois BigNumbers somamos o primeiro BigNumber com o simétrico do segundo. </p>
 
