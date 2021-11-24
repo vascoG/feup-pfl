@@ -135,8 +135,8 @@ mulBN [] _ = []
 mulBN _ [] = []
 mulBN (x:xs) (y:ys)
   | verificaBN (x:xs) == False || verificaBN (y:ys) == False = error("Os argumentos não são BigNumbers!")
-  | (x<0 && y<0) || (x>=0 && y>=0) = reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
-  | otherwise = adicionaSinal $ reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
+  | (x<0 && y<0) || (x>=0 && y>=0) = removeZero $reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
+  | otherwise = removeZero $ adicionaSinal $ reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
 
 mulBNAux :: BigNumber -> BigNumber -> BigNumber
 mulBNAux (x:[]) ys = escalaBN x ys

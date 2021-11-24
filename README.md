@@ -51,8 +51,10 @@
 
 
   <p>Na alínea 2, decidimos representar os BigNumber como uma lista de Int usando o type. Assim, de forma a garantir que só trabalhávamos com BigNumbers nas funções implementadas, criamos uma função verificaBN, que só aceita números de 0 a 9 em cada elemento da lista e apenas o primeiro elemento pode ter valores negativos. Assim, chamamos esta função em todas as funções principais do nosso trabalho, exceto na <i>scanner</i> e no <i>output</i> que fazem a verificação enquanto convertem.</p>
-  <p> Para o cálculo da soma de dois BigNumbers a estratégia utilizada foi </p>
+  <p> Para o cálculo da soma de dois BigNumbers a estratégia utilizada foi verificar os sinais de ambos os argumentos. Se tiverem o mesmo sinal vamos somando pela parte menos significativa e transportando os carrys, colocando o seu sinal no final. Se tiverem sinais opostos, fazemos a subtração do número com maior valor absoluto pelo que tem menor valor absoluto, utilizando uma estratégia similar à anterior com os carrys, e mantemos o sinal do maior.</p>
   <p> Para o cálculo da subtração de dois BigNumbers somamos o primeiro BigNumber com o simétrico do segundo. </p>
+  <p> Para calcular a multiplicação entre dois BigNumbers </p>
+  <p> Para calcular a divisão entre dois BigNumber, a estratégia adotada foi ir subtraindo o dividendo pelo divisor enquanto for possível e ir guardando o quociente num contador. A divisão segura passa apenas por verificar se o divisor é 0.</p>
 
 
 >Exercício 4
@@ -66,6 +68,8 @@
 |*fibLista* | 5000 | 0.15 |
 |*fibListaBN*| 5000 | 51.505|
 |*fibListaInfinita*| 5000 |0.01|
-|*fibListaInfinitaBN*|5000|6.145|
+|*fibListaInfinitaBN*| 5000 |6.145|
 
-Nota: O fibLista apartir de 92 dá valores errados == fibListaInfinita (INT)
+A partir do número 30, a função recursiva de Fibonnaci começa a ter valores de execução muito elevados, principalmente utilizando BigNumbers. O mesmo acontece para as restantes funções do Fibonacci de BigNumbers a partir do número 5000.
+
+Em relação aos tipos das funções, quando é utilizado o Fibonacci com o argumento do tipo Int, a sua precisão não permite calcular o número correto de Fibonacci a partir de 92, enquanto que tanto os argumentos do tipo Integer e BigNumbers, continuam a calcular corretamente o valor de Fibonacci de 5000 por exemplo, sendo o segundo muito mais lento do que o primeiro.

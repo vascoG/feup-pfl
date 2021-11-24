@@ -4,7 +4,7 @@ module Fib where
 import BigNumber
 
 {-1.1 Função recursiva
-    F0 = 1
+    F0 = 0
     F1 = 1
     Fn = Fn-1 + Fn-2
 -}
