@@ -52,6 +52,11 @@ No exercício 2 implementamos as seguintes funções: *scanner*, *output*, *soma
   A função *output* segue a mesma estratégia que a função *scanner*, porém converte BigNumbers para Strings.</p>
 <p> Posteriormente, a função *somaBN*, calcula a soma de dois BigNumbers.
 
+
+>Exercício 3
+  O fibLista apartir de 92 dá valores errados == fibListaInfinita
+
+
 >Exercício 4
 
 | Função | Número | Tempo médio de execução|

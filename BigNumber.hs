@@ -3,10 +3,10 @@ module BigNumber where
 --2 atençao aos numeros negativos
 -- zip aos ficheiros e nao a pasta externa
 
---2.1 duvida nesta
+--2.1 Definição de BigNumber
 type BigNumber = [Int]
+
 --2.2. Função scanner, converte uma String em BigNumber
--- Era nice ter um limpador para tirar os 0 a esquerda no fim
 scanner :: String -> BigNumber
 scanner []=[]
 scanner (x:[]) = [charToInt x]
@@ -56,6 +56,17 @@ intToChar 9 = '9'
 intToChar _ = error("Erro a converter um número num carácter")
 
 --Funções auxiliares para os restantes exercícios
+verificaBN :: BigNumber -> Bool
+verificaBN [] = True
+verificaBN (x:xs)
+  | x<=9 && x>=(-9) = verificaBNAux xs
+  | otherwise = False
+
+verificaBNAux :: BigNumber -> Bool
+verificaBNAux [] = True
+verificaBNAux (x:xs)
+  | x<=9 && x>=0 = verificaBNAux xs
+  | otherwise = False
 
 removeZero :: BigNumber -> BigNumber
 removeZero (x:xs)
@@ -80,11 +91,15 @@ adicionaSinal :: BigNumber -> BigNumber
 adicionaSinal (x:xs) = (-x:xs)
 
 --2.4. Função somaBN, calcula a soma de 2 BigNumbers
-
 somaBN :: BigNumber -> BigNumber -> BigNumber
-somaBN x [] = x
-somaBN [] y = y
+somaBN x []
+  | verificaBN x == False = error("Os argumentos não são BigNumbers!")
+  | otherwise = x
+somaBN [] y
+  | verificaBN y == False = error("Os argumentos não são BigNumbers!")
+  | otherwise = y
 somaBN (x:xs) (y:ys)
+  | verificaBN (x:xs) == False || verificaBN (y:ys) == False = error("Os argumentos não são BigNumbers!")
   | x < 0 && y < 0 = adicionaSinal $ removeZero $ reverse $ somaBNAux (reverse(-x:xs)) (reverse(-y:ys))
   | x >= 0 && y >= 0 = removeZero $ reverse $ somaBNAux (reverse (x:xs)) (reverse (y:ys))
   | otherwise = if maiorQue (abs x:xs) (abs y:ys) then somaBNAux1 (x:xs) (y:ys) else somaBNAux1 (y:ys) (x:xs)
@@ -108,16 +123,18 @@ subtrairBNAbs (x:xs) (y:ys)
   | x - y < 0 = (x - y + 10):subtrairBNAbs (subtrairBNAbs xs [1]) ys
   | otherwise = (x - y):subtrairBNAbs xs ys
 
--- A - B = A + (-B)
 --2.5 Função subBN, calcula a subtração de dois BigNumbers
 subBN :: BigNumber -> BigNumber -> BigNumber
-subBN x y = somaBN x (adicionaSinal y)
+subBN x y
+  | verificaBN x == False || verificaBN y == False = error("Os argumentos não são BigNumbers!")
+  | otherwise = somaBN x (adicionaSinal y)
 
 --2.6 Função mulBN, calcula a multiplicação de dois BigNumbers.
 mulBN :: BigNumber -> BigNumber -> BigNumber
 mulBN [] _ = []
 mulBN _ [] = []
 mulBN (x:xs) (y:ys)
+  | verificaBN (x:xs) == False || verificaBN (y:ys) == False = error("Os argumentos não são BigNumbers!")
   | (x<0 && y<0) || (x>=0 && y>=0) = reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
   | otherwise = adicionaSinal $ reverse $ mulBNAux1 $ mulBNAux (reverse (abs x:xs)) (reverse (abs y:ys))
 
@@ -137,6 +154,7 @@ mulBNAux1 (x:xs)
 --2.7 Função divBN, calcula a divisão de dois BigNumbers
 divBN :: BigNumber -> BigNumber -> (BigNumber,BigNumber)
 divBN x y
+  | verificaBN x == False || verificaBN y == False = error("Os argumentos não são BigNumbers!")
   | maiorQue y [0] = (reverse (fst z),snd z)
   | otherwise = error("Não é possível fazer essa divisão!")
   where z = divBNAux x y ([0],[0])
@@ -146,3 +164,11 @@ divBNAux :: BigNumber -> BigNumber -> (BigNumber,BigNumber) -> (BigNumber,BigNum
 divBNAux x y z
   | (maiorQue y x) = (fst z,x)
   | otherwise = divBNAux (subBN x y) y (somaBNAux (fst z) [1],snd z)
+
+
+--5 Função safeDivBN, calcula a divisão de dois BigNumbers e deteta a divisão por 0
+safeDivBN :: BigNumber -> BigNumber -> Maybe (BigNumber, BigNumber)
+safeDivBN _ [0] = Nothing
+safeDivBN x y
+  | verificaBN x == False || verificaBN y == False = error("Os argumentos não são BigNumbers!")
+  | otherwise = Just (divBN x y)

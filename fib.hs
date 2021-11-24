@@ -16,14 +16,14 @@ fibRec n = fibRec (n-1) + fibRec (n-2)
   lista !! 2 = (lista !! 1) + (lista !! 0) = 0 + 1 = 1
   lista !! i = (lista !! i-1 ) + (lista !! i-2)
 -}
-fibLista :: Int -> Int
-fibLista i = lista !! i where lista = 0:1:[lista !! (x-1) + (lista !! (x-2)) | x<-[2..i]]
+fibLista :: (Integral a) => a -> a
+fibLista i = lista !! (fromIntegral i)  where lista = 0:1:[lista !! (fromIntegral (x-1)) + (lista !! (fromIntegral x-2)) | x<-[2..i]]
 
 {-1.3 Função com lista infinita
     [F0,F1,F1+F0,...,Fn-1 + Fn-2,...]
 -}
-fibListaInfinita :: Int -> Int
-fibListaInfinita n = lista !! n where lista = 0:1:(zipWith(+) lista (tail lista))
+fibListaInfinita :: (Integral a) => a -> a
+fibListaInfinita n = lista !! (fromIntegral n) where lista = 0:1:(zipWith(+) lista (tail lista))
 
 
 --3.1 Função recursiva com BigNumber
