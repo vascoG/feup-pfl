@@ -34,8 +34,8 @@
 |*subtrairBNAbs*|Esta função faz a diferença entre dois valores absolutos de BigNumbers, sendo o primeiro argumento o maior dos dois. É usada para a soma entre BigNumbers de sinais simétricos. |
 |***subBN***|Esta função calcula a subtração através da soma entre primeiro número e o simétrico do segundo.|
 |***mulBN***|Esta função calcula a multiplicação entre 2 BigNumbers. Utiliza 3 funções auxiliares *mulBNAux*, *mulBNAux1* e *escalaBN*.|
-|*mulBNAux*|Função auxiliar, que recorre à chamada recursiva de modo a multiplicar cada elemento do primeiro BigNumber recebido pelo segundo BigNumber. Para cada número do primeiro BigNumber, exceto o primeiro, acrescentamos posteriormente um 0 à cabeça do segundo de modo a realizar a soma final corretamente.|
-|*mulBNAux1*||
+|*mulBNAux*|Função auxiliar, que recorre à chamada recursiva de modo a multiplicar cada elemento do primeiro BigNumber recebido pelo segundo BigNumber. Para cada número do primeiro BigNumber, exceto o primeiro, acrescentamos posteriormente um 0 à cabeça do segundo de modo a realizar a soma final corretamente, uma vez que o 0 ficará à direita após o reverter da lista.|
+|*mulBNAux1*|Esta função corrige possíveis elementos da lista que tenham mais que um algarismo devido às multiplicações anteriores, transportando eventuais carrys para o resto da lista.|
 |*escalaBN*|Função auxiliar que realiza a multiplicação de um número pelo BigNumber.|
 |***divBN***|Esta função calcula a divisão entre 2 BigNumbers. Utiliza uma função auxiliar *divBNAux*.|
 |*divBNAux*|Esta função vai subtraindo o dividendo pelo divisor, acrescentando uma unidade ao quociente sempre que acontece a subtração, preservando o resto no segundo elemento do par.|
