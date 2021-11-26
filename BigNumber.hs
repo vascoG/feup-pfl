@@ -155,7 +155,7 @@ mulBNAux1 (x:xs)
 divBN :: BigNumber -> BigNumber -> (BigNumber,BigNumber)
 divBN x y
   | verificaBN x == False || verificaBN y == False = error("Os argumentos não são BigNumbers!")
-  | maiorQue y [0] = (reverse (fst z),snd z)
+  | maiorQue y [0] = (removeZero $ reverse (fst z),removeZero $ snd z)
   | otherwise = error("Não é possível fazer essa divisão!")
   where z = divBNAux x y ([0],[0])
 
