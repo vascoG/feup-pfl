@@ -115,7 +115,7 @@ testOutput n = do
 
 testVerificaBN :: BigNumber -> IO()
 testVerificaBN n = do
-  if (verificaBN n) then putStrLn $ (output n) ++ " é um BigNumber" else putStrLn $ (show n) ++ " não é um BigNumber"
+  if (verificaBN n) then putStrLn $ (show n) ++ " é um BigNumber" else putStrLn $ (show n) ++ " não é um BigNumber"
 
 testRemoveZero :: BigNumber -> IO()
 testRemoveZero n = do

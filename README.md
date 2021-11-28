@@ -8,7 +8,7 @@
 |*scanner*| Esta função reporta um erro, através da função auxiliar *charToInt*, caso um caracter da *String* não seja um dígito positivo, excetuando o primeiro caracter que pode ser negativo. |
 |*output*| Esta função reporta um erro, através da função auxiliar *intToChar*, caso um elemento da lista não seja um dígito positivo, excetuando o primeiro elemento que pode ser negativo. |
 |*somaBN subBN mulBN divBN safeDivBN*| Estas funções reportam um erro caso alguns dos argumentos não seja um BigNumber válido. Esta verificação é feita através da função *verificaBN*.|
-|*divBN*| Esta função reporta um erro caso o divisor seja o BigNumber corresponde ao número 0.|
+|*divBN*| Esta função reporta um erro caso o divisor seja o BigNumber correspondente ao número 0.|
 
 
 >Explicação sucinta do funcionamento de cada função
@@ -60,10 +60,10 @@
 > Estratégias utilizadas na implementação das funções da alínea 2
 
 
-  <p>Na alínea 2, decidimos representar os BigNumber como uma lista de Int usando o type. Assim, de forma a garantir que só trabalhávamos com BigNumbers nas funções implementadas, criamos uma função verificaBN, que só aceita números de 0 a 9 em cada elemento da lista e apenas o primeiro elemento pode ter valores negativos. Assim, chamamos esta função em todas as funções principais do nosso trabalho, exceto na <i>scanner</i> e no <i>output</i> que fazem a verificação enquanto convertem.</p>
+  <p>Na alínea 2, decidimos representar os BigNumber como uma lista de Int usando o type. Assim, de forma a garantir que só trabalhávamos com BigNumbers nas funções implementadas, criamos uma função verificaBN, que só aceita números de 0 a 9 em cada elemento da lista e apenas o primeiro elemento pode ter valores negativos. Assim, chamamos esta função em todas as funções principais do nosso trabalho, exceto na <i>scanner</i> e no <i>output</i> que fazem a verificação enquanto convertem. Para facilitar os desenvolvimentos das funções foi seguida a sugestão de reverter previamente o BigNumber.</p>
   <p> Para o cálculo da soma de dois BigNumbers a estratégia utilizada foi verificar os sinais de ambos os argumentos. Se tiverem o mesmo sinal vamos somando pela parte menos significativa e transportando os carrys, colocando o seu sinal no final. Se tiverem sinais opostos, fazemos a subtração do número com maior valor absoluto pelo que tem menor valor absoluto, utilizando uma estratégia similar à anterior com os carrys, e mantemos o sinal do maior.</p>
   <p> Para o cálculo da subtração de dois BigNumbers somamos o primeiro BigNumber com o simétrico do segundo. </p>
-  <p> Para calcular a multiplicação entre dois BigNumbers </p>
+  <p> Para calcular a multiplicação entre dois BigNumbers, multiplicamos cada elemento do primeiro BigNumber recebido pelo segundo BigNumber, somando os resultados obtidos. Para isto, introduzimos um 0 à cabeça sempre que avançamos uma casa decimal, uma vez que ficaria à direita após o reverter da lista.</p>
   <p> Para calcular a divisão entre dois BigNumber, a estratégia adotada foi ir subtraindo o dividendo pelo divisor enquanto for possível e ir guardando o quociente num contador. A divisão segura passa apenas por verificar se o divisor é 0.</p>
 
 

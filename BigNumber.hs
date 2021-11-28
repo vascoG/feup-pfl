@@ -1,7 +1,4 @@
 module BigNumber where
---1 - cada soluçao tem de ser mais eficiente que a anterior, testar casos limites, 5+5 = 10, 5-6=-1, criar um ficheiro auxiliar com testes usando IO()
---2 atençao aos numeros negativos
--- zip aos ficheiros e nao a pasta externa
 
 --2.1 Definição de BigNumber
 type BigNumber = [Int]
@@ -129,7 +126,7 @@ subBN x y
   | verificaBN x == False || verificaBN y == False = error("Os argumentos não são BigNumbers!")
   | otherwise = somaBN x (adicionaSinal y)
 
---2.6 Função mulBN, calcula a multiplicação de dois BigNumbers.
+--2.6 Função mulBN, calcula a multiplicação de dois BigNumbers
 mulBN :: BigNumber -> BigNumber -> BigNumber
 mulBN [] _ = []
 mulBN _ [] = []
