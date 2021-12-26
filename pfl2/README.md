@@ -4,7 +4,7 @@
 
 **Grupo:** 4Mation_1
 
-up201906617 - Vasco David Antunes Pereira Gomes - 50%\
+up201906617 - Vasco David Antunes Pereira Gomes - 50%
 up202003480 - Mariana Mirra Monteiro - 50%
 
 ## Instalação e Execução
