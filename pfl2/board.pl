@@ -1,10 +1,10 @@
 /**
-* Board is represented by a list of lists that can be queried using predicate board(+Board,+I,+J,-Player), meaning in position (I,J) there is
+* Board is represented by a list of lists that can be queried using predicate board(+Board,+I-J,-Player), meaning in position (I,J) there is
 * a cube placed by the Player. If there is no cubes, Player returns 0.
 */
 
 %initial_state(+Size,-GameState)
-initial_state(Size,gamestate(Board,1,nan,nan)):- initial_board(Size, Board).
+initial_state(Size,gamestate(Board,1,nan-nan)):- initial_board(Size, Board).
 
 %initial_board(+Size, -Board)
 initial_board(Size,Board):- 
