@@ -1,4 +1,5 @@
 :- ensure_loaded(board).
+:- use_module(library(between)).
 
 /**
 * Game state is represented by the structure gamestate(Board, Turn, I-J), where -(I,J)
@@ -8,10 +9,9 @@
 %move(+GameState, +Move, -NewGameState)
 move(gamestate(Board,Turn,I-J), MoveI-MoveJ, gamestate(NewBoard,NewTurn, MoveI-MoveJ)):-
     length(Board, Size), %Obter tamanho do tabuleiro e verificar se a jogada está dentro do tabuleiro
-    MoveI >= 0,
-    MoveJ >= 0,
-    MoveI < Size,
-    MoveJ < Size,
+    Size1 is Size-1,
+    between(0,Size1, MoveI),
+    between(0,Size1, MoveJ),
     is_adjacent(MoveI-MoveJ, I-J), %Verificar se a jogada é adjacente à última jogada
     board(Board, MoveI-MoveJ, 0),  %Verificar se a célula está vazia.
     Turn1 is (Turn rem 2), 
@@ -47,3 +47,20 @@ is_adjacent(I1-J1,I1-J2):-
 %player_turn(+Turn, -Player)
 player_turn(0, 2).
 player_turn(1, 1).
+
+%has_valid_moves(+GameState)
+has_valid_moves(GameState):-
+    !,
+    move(GameState, _ ,_).
+
+%game_over(+GameState, -Winner)
+game_over(GameState, Winner):-
+    \+(has_valid_moves(GameState)),
+    Winner is 0.
+
+game_over(GameState, Winner):-
+    game_over_horizontal(GameState,Winner).
+
+%game_over_horizontal(+GameState, -Winner)
+game_over_horizontal(gamestate(Board, Turn, I-J), Winner):-
+    
