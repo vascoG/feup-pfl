@@ -48,19 +48,11 @@ is_adjacent(I1-J1,I1-J2):-
 player_turn(0, 2).
 player_turn(1, 1).
 
+%player_last_turn(+Turn, -Player)
+player_last_turn(1, 2).
+player_last_turn(0, 1).
+
 %has_valid_moves(+GameState)
 has_valid_moves(GameState):-
     !,
     move(GameState, _ ,_).
-
-%game_over(+GameState, -Winner)
-game_over(GameState, Winner):-
-    \+(has_valid_moves(GameState)),
-    Winner is 0.
-
-game_over(GameState, Winner):-
-    game_over_horizontal(GameState,Winner).
-
-%game_over_horizontal(+GameState, -Winner)
-game_over_horizontal(gamestate(Board, Turn, I-J), Winner):-
-    
