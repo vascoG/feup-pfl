@@ -1,49 +1,39 @@
 :- ensure_loaded(gameover).
+:- ensure_loaded(interface).
 
-%display_game(+GameState)
-display_game(gamestate([Line|Board],Turn,_)):-
-    format('~nTurno: ~d~n~n', Turn),
-    format('   ',[]),
-    print_top_coords(Line,0),
-    format('   ',[]),
-    print_top(Line),
-    print_board([Line|Board],0),
-    format('   ',[]),
-    print_top(Line).
+%menu
+menu:-
+    repeat,
+    display_menu,
+    format('Option: ', []), get_char(Option), skip_line,
+    menu(Option), !.
 
+%menu(+Option)
 
-%print_top_coords(+Line, +C)
-print_top_coords([_],C):-
-    format(' ~d ~n',[C]).
-print_top_coords([_|T], C):-
-    C1 is C+1,
-    print_cell(C),
-    print_top_coords(T,C1).
+menu('0'):-
+    abort.
 
-%print_left_coords(+C)
-print_left_coords(C):-
-    format('~d |', C).
+menu('1'):-
+    repeat,
+    format('~nChoose the size of the board. The number of columns and lines must be between 4 and 9: ',[]),
+    get_code(Size), skip_line,
+    number_codes(Size1, [Size]),
+    Size1 > 3, 
+    Size1 < 10,
+    options, !.
 
-print_top([_]):-
-    format('---~n' , []).
-print_top([_|T]):-
-    format('---|', []),
-    print_top(T).
+options:-
+    display_play_options,
+    format('Option: ', []), get_char(Option), skip_line,
+    play_options(Option), !.
 
-%print_board(+Size, +Board)
-print_board([],_).
-print_board([Line|Board],C):-
-    print_left_coords(C),
-    print_line(Line),
-    C1 is C+1,
-    print_board(Board,C1).
+%play_options(+Option)
+play_options('0'):-
+    menu.
 
-print_line([]):-
-    format('~n',[]).
-print_line([H|T]):-
-    print_cell(H),
-    print_line(T).
+play_options('1'):-
+    play_game(h-h,_).
 
-print_cell(C):-
-    format(' ~d |', C).
-
+%play_game(+P1-P2, +Size, +Level)
+%play_game(P1-P2, Size, Level):-
+ %  initial_state()
