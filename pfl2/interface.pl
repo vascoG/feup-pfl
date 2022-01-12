@@ -1,5 +1,6 @@
 %display_game(+GameState)
 display_game(gamestate([Line|Board],Turn,_)):-
+    format('~n------------------------------------------------~n',[]),
     format('~nTurno: ~d~n~n', Turn),
     format('   ',[]),
     print_top_coords(Line,0),
@@ -64,3 +65,22 @@ print_line([H|T]):-
 %print_cell(+C)
 print_cell(C):-
     format(' ~d |', C).
+
+
+%read_digit_between(+Low, +High, -Number)
+read_digit_between(Low, High, Number):-
+    repeat,
+    get_code(Code),
+    skip_line,
+    Number is Code-48,
+    Number > Low,
+    Number < High,
+    Number < 10.
+
+read_digit_between_one_time(Low, High, Number):-
+    get_code(Code),
+    skip_line,
+    Number is Code-48,
+    Number > Low,
+    Number < High,
+    Number < 10.

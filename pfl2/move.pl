@@ -8,10 +8,9 @@
 
 %move(+GameState, +Move, -NewGameState)
 move(gamestate(Board,Turn,I-J), MoveI-MoveJ, gamestate(NewBoard,NewTurn, MoveI-MoveJ)):-
-    length(Board, Size), %Obter tamanho do tabuleiro e verificar se a jogada está dentro do tabuleiro
-    Size1 is Size-1,
-    between(0,Size1, MoveI),
-    between(0,Size1, MoveJ),
+    board_dimension(Size),
+    between(0,Size, MoveI),
+    between(0,Size, MoveJ),
     is_adjacent(MoveI-MoveJ, I-J), %Verificar se a jogada é adjacente à última jogada
     board(Board, MoveI-MoveJ, 0),  %Verificar se a célula está vazia.
     Turn1 is (Turn rem 2), 
@@ -56,3 +55,7 @@ player_last_turn(0, 1).
 has_valid_moves(GameState):-
     !,
     move(GameState, _ ,_).
+
+%valid_moves(+GameState, -ListOfMoves)
+valid_moves(GameState,ListOfMoves):-
+    findall(I-J, move(GameState, I-J ,_), ListOfMoves).
