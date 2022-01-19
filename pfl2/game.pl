@@ -44,49 +44,45 @@ play_options(2):-
     format('~n0 - Human',[]),
     format('~n1 - Computer',[]),
     format('~nOption: ', []), read_digit_between(-1,2,Option),
-    format('~nChoose the level of the computer(0-1)',[]),
-    format('~nOption: ', []),read_digit_between(-1,2,Level),
+    format('~nChoose the level of the computer(1-2)',[]),
+    format('~nOption: ', []),read_digit_between(0,3,Level),
     play_human_computer(Option,Level).
 
 
 %play_human_computer(+Option, +Level)
 play_human_computer(0,Level):-
-    asserta(computer_level(Level)),
-    play_game(h-c).
+    play_game(h+0-c+Level).
 
 play_human_computer(1,Level):-
-    asserta(computer_level(Level)),
-    play_game(c-h).
+    play_game(c+Level-h+0).
 
 %play_game(+P1-P2)
-play_game(P1-P2):-
+play_game(P1+L1-P2+L2):-
     board_dimension(Size),
     initial_state(Size, GameState),
     display_game(GameState),
-    play_loop(GameState, P1-P2).
+    play_loop(GameState, P1+L1-P2+L2).
 
 %play_loop(+GameState, +Player)
 play_loop(GameState,_):-
     game_over(GameState, Winner), !, 
     format('~nACABOU O JOGO~n~d', [Winner]).
 
-play_loop(GameState, P1-P2):-
+play_loop(GameState, P1+L1-P2+L2):-
     %display_valid_moves
-    choose_move(GameState,P1, I-J),
+    select_move(GameState,P1+L1, I-J),
     move(GameState, I-J, NewGameState),
     display_game(NewGameState),!,
-    play_loop(NewGameState, P2-P1).
+    play_loop(NewGameState, P2+L2-P1+L1).
 
-%choose_move(+GameState, +Player, -I-J)
-choose_move(_,h, I-J):-
+%input_move(+GameState, +Player, -I-J)
+select_move(_,h+_, I-J):-
     board_dimension(Size),
     format('~nRow: ',[]), read_digit_between_one_time(-1,Size,I),
     format('~nColumn: ',[]), read_digit_between_one_time(-1,Size,J).
 
-choose_move(GameState,c, I-J):-
-    board_dimension(Size),
-    computer_level(Level),
-    computer_move(GameState,Level,I-J).
+select_move(GameState,c+Level, I-J):-
+    choose_move(GameState,Level,I-J).
 
 
 
