@@ -12,8 +12,7 @@ choose_move(GameState, 1, Move):-
 choose_move(GameState, 2, Move):-
     current_player(GameState, Player),
     valid_moves(GameState, Moves),
-    setof(Value-Mv, NewGameState^(member(Mv,Moves),move(GameState, Mv, NewGameState), value(NewGameState, Player, Value)), [V-Move|Tail]),
-    write([V-Move|Tail]).
+    setof(Value-Mv, NewGameState^(member(Mv,Moves),move(GameState, Mv, NewGameState), value(NewGameState, Player, Value)), [_V-Move|_]).
 
 
 

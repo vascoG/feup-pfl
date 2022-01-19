@@ -1,7 +1,8 @@
 %display_game(+GameState)
-display_game(gamestate([Line|Board],Turn,_)):-
+display_game(gamestate([Line|Board],Turn,Move)):-
     format('~n------------------------------------------------~n',[]),
-    format('~nTurno: ~d~n~n', Turn),
+    format('~nTurn: ~d', Turn),
+    format('~nLast Move: ~w~n~n', Move),
     format('   ',[]),
     print_top_coords(Line,0),
     format('   ',[]),
@@ -13,9 +14,8 @@ display_game(gamestate([Line|Board],Turn,_)):-
 
 %display_menu
 display_menu:-
-    format('~n4MATION e um jogo de tabuleiro cujo objetivo e colocar cubos estrategicamente de forma a fazer uma linha horizontal, vertical ou diagonal de 4 cubos.~n',[]),
-    format('Desenvolvido por Mariana Monteiro e Vasco Gomes.~n~n',[]),
-    format('------------------------------------------------~n~n',[]),
+    format('~n                        4MATION              ~n',[]),    
+    format('Developed by Mariana Monteiro and Vasco Gomes.~n~n',[]),    format('------------------------------------------------~n~n',[]),
     format('OPTIONS:~n~n', []),
     format('1. Play~n', []),
     format('2. Instructions~n', []),
@@ -84,3 +84,10 @@ read_digit_between_one_time(Low, High, Number):-
     Number > Low,
     Number < High,
     Number < 10.
+
+%display_winner(+Winner)
+display_winner(0):-
+    format('~nGAME ENDED IN A DRAW!', []), !.
+
+display_winner(Winner):-
+    format('~nGAME ENDED! PLAYER ~d WON!',[Winner]).

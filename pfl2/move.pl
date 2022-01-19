@@ -58,4 +58,5 @@ has_valid_moves(GameState):-
 
 %valid_moves(+GameState, -ListOfMoves)
 valid_moves(GameState,ListOfMoves):-
-    findall(I-J, move(GameState, I-J ,_), ListOfMoves).
+    findall(Move, move(GameState, Move ,_), ListOfMoves1),
+    sort(ListOfMoves1,ListOfMoves).
