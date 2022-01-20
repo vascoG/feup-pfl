@@ -15,7 +15,6 @@ menu:-
     menu(Option), !.
 
 %menu(+Option)
-
 menu(0):-
     abort.
 
@@ -26,12 +25,12 @@ menu(1):-
     asserta(board_dimension(Size)),
     options, !.
 
-
 menu(2):-
     format('~n4MATION is a board game whose objective is to strategically place cubes in order to make a horizontal, vertical or diagonal line of 4 cubes.~n',[]),
     press_enter_to_continue,
     menu.
 
+%options
 options:- 
     repeat,
     display_play_options,
@@ -70,14 +69,14 @@ play_human_computer(0,Level):-
 play_human_computer(1,Level):-
     play_game(c+Level-h+0).
 
-%play_game(+P1-P2)
+%play_game(+Players)
 play_game(P1+L1-P2+L2):-
     board_dimension(Size),
     initial_state(Size, GameState),
     display_game(GameState),
     play_loop(GameState, P1+L1-P2+L2).
 
-%play_loop(+GameState, +Player)
+%play_loop(+GameState, +Players)
 play_loop(GameState,_):-
     game_over(GameState, Winner), !, 
     display_winner(Winner).
@@ -89,28 +88,6 @@ play_loop(GameState, P1+L1-P2+L2):-
     display_game(NewGameState),!,
     play_loop(NewGameState, P2+L2-P1+L1).
 
-%select_move(+GameState, +Player, -I-J)
-select_move(_,h+_, I-J):-
-    board_dimension(Size),
-    format('~nRow: ',[]), read_digit_between_one_time(-1,Size,I),
-    format('~nColumn: ',[]), read_digit_between_one_time(-1,Size,J).
-
-select_move(GameState,c+Level, Move):-
-    choose_move(GameState,Level,Move),
-    current_player(GameState, Player),
-    format('~nComputer (Player ~d) has chosen to play in: ~w', [Player,Move]),
-    press_enter_to_continue.
 
 
-%display_valid_moves(+GameState,+Player)
-display_valid_moves(GameState,h):-
-    valid_moves(GameState, Moves),
-    format('~nValid moves: ',[]),
-    write(Moves).
 
-display_valid_moves(_,c).
-
-
-press_enter_to_continue:-
-    format('~n~nPress enter to continue ',[]),
-    skip_line.

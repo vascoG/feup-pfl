@@ -60,3 +60,22 @@ has_valid_moves(GameState):-
 valid_moves(GameState,ListOfMoves):-
     findall(Move, move(GameState, Move ,_), ListOfMoves1),
     sort(ListOfMoves1,ListOfMoves).
+
+
+%select_move(+GameState, +Player, -I-J)
+select_move(_,h+_, I-J):-
+    board_dimension(Size),
+    format('~nRow: ',[]), read_digit_between_one_time(-1,Size,I),
+    format('~nColumn: ',[]), read_digit_between_one_time(-1,Size,J).
+
+select_move(GameState,c+Level, Move):-
+    choose_move(GameState,Level,Move),
+    current_player(GameState, Player),
+    format('~nComputer (Player ~d) has chosen to play in: ~w', [Player,Move]),
+    press_enter_to_continue.
+
+
+%current_player(+GameState, -Player)
+current_player(gamestate(_,Turn,_),Player):-
+    Turn1 is (Turn rem 2), 
+    player_turn(Turn1, Player).

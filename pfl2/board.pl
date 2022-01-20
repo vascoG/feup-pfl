@@ -10,18 +10,16 @@ initial_state(Size,gamestate(Board,1,nan-nan)):- initial_board(Size, Board).
 
 %initial_board(+Size, -Board)
 initial_board(Size,Board):- 
-    create_board(Size,Board,Size).
+    create_board(Size,Size,Board).
 
+%create_board(+SizeLine,+SizeColumn, -Board)
 create_board(_,[],0).
 
-create_board(Size,[Line|Board],Column):-
+create_board(Size,Column,[Line|Board]):-
     Column > 0,
     Column1 is Column-1,
     create_line(Size,Line),
-    create_board(Size,Board,Column1).
-
-
-
+    create_board(Size,Column1,Board).
 
 %create_line(+Size, -Line)
 create_line(1,[0]).

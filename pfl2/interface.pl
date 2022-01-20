@@ -11,7 +11,6 @@ display_game(gamestate([Line|Board],Turn,Move)):-
     format('   ',[]),
     print_border(Line).
 
-
 %display_menu
 display_menu:-
     format('~n                        4MATION              ~n',[]),    
@@ -66,7 +65,6 @@ print_line([H|T]):-
 print_cell(C):-
     format(' ~d |', C).
 
-
 %read_digit_between(+Low, +High, -Number)
 read_digit_between(Low, High, Number):-
     repeat,
@@ -77,6 +75,7 @@ read_digit_between(Low, High, Number):-
     Number < High,
     Number < 10.
 
+%read_digit_between_one_time(+Low, +High, -Number)
 read_digit_between_one_time(Low, High, Number):-
     get_code(Code),
     skip_line,
@@ -91,3 +90,17 @@ display_winner(0):-
 
 display_winner(Winner):-
     format('~nGAME ENDED! PLAYER ~d WON!',[Winner]).
+
+%display_valid_moves(+GameState,+Player)
+display_valid_moves(GameState,h):-
+    valid_moves(GameState, Moves),
+    format('~nValid moves: ',[]),
+    write(Moves).
+
+display_valid_moves(_,c).
+
+
+%press_enter_to_continue
+press_enter_to_continue:-
+    format('~n~nPress enter to continue ',[]),
+    skip_line.

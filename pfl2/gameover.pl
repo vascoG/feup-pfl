@@ -22,7 +22,6 @@ game_over(gamestate(Board, Turn, _), Winner):-
     player_last_turn(Turn1, LastPlayer),
     game_over_diagonal2(gamestate(Board, Turn, _), LastPlayer, Winner), !.   
     
-
 game_over(GameState, Winner):-
     \+(has_valid_moves(GameState)),
     Winner is 0.

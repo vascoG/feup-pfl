@@ -3,7 +3,7 @@
 :- use_module(library(random)).
 
 
-
+%choose_move(+GameState, +Level, -Move)
 choose_move(GameState, 1, Move):-
     valid_moves(GameState, Moves),
     random_select(Move, Moves, _).
@@ -22,14 +22,6 @@ possible_next_game_state(gamestate(Board,Turn,I-J), Player, gamestate(NewBoard, 
     update_board(Board, I, J, Player, NewBoard).
 
 
-
-%erro: o pc so deve avaliar consoante a ultima jogada e nao o tabuleiro todo
-
-%current_player(+GameState, -Player)
-current_player(gamestate(_,Turn,_),Player):-
-    Turn1 is (Turn rem 2), 
-    player_turn(Turn1, Player).
-
 %value(+GameState, +Player, -Value)
 value(GameState, Player, 0):-
     game_over(GameState, Player), !.
@@ -44,20 +36,27 @@ value(GameState, Player, 2):-
 
 value(GameState, Player, 3):-
     opponent(Player, Opponent),
+    count(consecutive_cubes(GameState,Player,3),Count1),
     possible_next_game_state(GameState, Opponent, OpponentGameState),
-    consecutive_cubes(OpponentGameState, Opponent, 3),!.
+    count(consecutive_cubes(OpponentGameState,Opponent,3),Count2),
+    Count2 > Count1,!.
 
 value(GameState, Player, 4):-
     consecutive_cubes(GameState, Player, 2),!.
 
 value(GameState, Player, 5):-
     opponent(Player, Opponent),
+    count(consecutive_cubes(GameState,Player,2),Count1),
     possible_next_game_state(GameState, Opponent, OpponentGameState),
-    consecutive_cubes(OpponentGameState, Opponent, 2),!.
+    count(consecutive_cubes(OpponentGameState,Opponent,2),Count2),
+    Count2 > Count1,!.
 
 value(_,_,6).
 
-
+%count(+P,-Count)
+count(P, Count):-
+    findall(1,P,L),
+    length(L,Count).
 
 %consecutive_cubes(+GameState, +Player, +N)
 consecutive_cubes(gamestate(Board,_,_),Player,3):-
