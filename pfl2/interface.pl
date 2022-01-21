@@ -1,3 +1,5 @@
+:-ensure_loaded(move).
+
 %display_game(+GameState)
 display_game(gamestate([Line|Board],Turn,Move)):-
     format('~n------------------------------------------------~n',[]),

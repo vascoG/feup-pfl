@@ -13,7 +13,7 @@ initial_board(Size,Board):-
     create_board(Size,Size,Board).
 
 %create_board(+SizeLine,+SizeColumn, -Board)
-create_board(_,[],0).
+create_board(_,0,[]).
 
 create_board(Size,Column,[Line|Board]):-
     Column > 0,
