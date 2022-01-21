@@ -42,7 +42,7 @@ play_options(0):-
     menu.
 
 play_options(1):-
-   play_game(h-h).
+   play_game(h+0-h+0).
 
 play_options(2):-
     format('Choose who starts the game: ',[]),
