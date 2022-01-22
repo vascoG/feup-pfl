@@ -2,7 +2,7 @@
 
 
 display_initial_state:-
-    initial_state(65,GameState),
+    initial_state(5,GameState),
     display_game(GameState).
 
 display_intermediate_state:-
