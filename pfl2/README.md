@@ -122,4 +122,6 @@ Durante o jogo, é apresentado ao jogador a lista de jogadas válidas que este p
 
  >Avaliação do Estado do Jogo
 
+ 
+
  >Jogada do Computador
