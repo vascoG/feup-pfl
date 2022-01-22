@@ -97,8 +97,29 @@ Uma jogada é válida se:
 
 O predicado move(+GameState, +Move, -NewGameState) é responsável pela execução de uma jogada. Os predicados is_adjacent(+I1-J1,+I2-J2) e board(+Board,+I-J,?Player) são responsáveis pela validação das jogadas, onde o primeiro predicado verifica se a jogada foi adjacente à anterior e o segundo se a célula está vazia.
 
+### Estado Inicial
+![estadoinicial](imagens/estadoinicial.png)
+
+### Estado Intermédio
+![estadointermedio](imagens/estadointermedio.png)
+
+### Estado Final
+![estadofinal](imagens/estadofinal.png)
+
+As imagens acima são exemplos de execução de um jogo Computador x Computador.
+
 >Final do Jogo
 
 O predicado game_over(+GameState,-Winner) é o responsável para verificação da situação do fim do jogo. Este predicado verifica primeiro se algum dos jogadores ganhou a partida e, caso não tenham ganho, se a partida terminou empatada. Esta ordem é importante uma vez que a partida acaba empatada quando um jogador não tem jogadas válidas mas o jogador anterior pode ter ganho a partida e por isso deve ser verificado primeiro se algum dos jogadores tem 4 dos seus cubos consecutivos. Para esta verificação, é feita uma análise do tabuleiro por linhas horizontais, verticais e nos dois sentidos diagonais focando-se apenas no último jogador (se foi o turno do Jogador 1, a jogada dele nada influencia na vitória do jogador 2). Para a verificação do empate, fazemos uma negação ao predicado has_valid_moves(+GameState). Em caso de empate, Winner ficará a 0 e em caso de vitória ficará com o jogador vencedor.
 
 >Lista de jogadas válidas
+
+Durante o jogo, é apresentado ao jogador a lista de jogadas válidas que este pode jogar. Para isso, utilizamos o predicado display_valid_moves(+GameState,+Player) que apresenta as jogadas calculadas no predicado valid_moves(+GameState, -ListOfMoves). Este predicado, recorre ao uso do predicado findall de modo a obter todas as jogadas válidas.
+
+![jogadasvalidas](imagens/jogadasvalidas.png)
+
+ SEI QUE NAO ESTA MUITO BEM MAS NAO SEI EXPLICAR MELHOR
+
+ >Avaliação do Estado do Jogo
+
+ >Jogada do Computador
