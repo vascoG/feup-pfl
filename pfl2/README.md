@@ -4,13 +4,16 @@
 
 **Grupo:** 4Mation_1
 
-up201906617 - Vasco David Antunes Pereira Gomes - 50%
+
 up202003480 - Mariana Mirra Monteiro - 50%
+
+up201906617 - Vasco David Antunes Pereira Gomes - 50%
 
 ## Instalação e Execução
 
-incluir todos os passos necessários para correta execução do jogo em
-ambientes Linux e Windows (para além da instalação do SICStus Prolog 4.7);
+- Abrir SICStus
+- `File` -> `Consult...` -> Selecionar ficheiro `game.pl`
+- Na consola do SICStus: `play.`
 
 ## Descrição do Jogo
 
@@ -67,7 +70,6 @@ gamestate(
   23,0-3
   )
 ```
-nota sobre o nan
 >Visualização do estado de jogo
 
 Após fazer a consulta de game.pl, para entrar no jogo tem de utilizar o predicado play.. De seguida, é apresentado um pequeno menu com as opções 1.play, 2.Instructions e por fim 0.Quit
@@ -83,10 +85,6 @@ Caso escolha as opções 2 ou 3 terá de escolher o nível de dificuldade do com
 ![humano_computador](imagens/humanocomputador.png)
 
 ![computadorvscomputador](imagens/computadorvscomputador.png)
-
-meter aqui a representação estado de jogo por fotos?
-
-fizemos todos os cenarios possiveis que são pedidos
 
 >Execução de jogadas
 
