@@ -118,10 +118,34 @@ Durante o jogo, é apresentado ao jogador a lista de jogadas válidas que este p
 
 ![jogadasvalidas](imagens/jogadasvalidas.png)
 
- SEI QUE NAO ESTA MUITO BEM MAS NAO SEI EXPLICAR MELHOR
 
  >Avaliação do Estado do Jogo
 
- 
+ A avaliação do estado do jogo é baseado no número de cubos consecutivos que a próxima jogada pode ter. O computador seguirá a seguinte ordem decrescente de valorização:
+
+  - próxima jogada ganha (4 cubos consecutivos), 
+  - próxima jogada evita que o adversário ganhe (4 cubos consecutivos), 
+  - próxima jogada aumenta o número de 3 cubos consecutivos
+  -  próxima jogada evita que o adversário aumente o número de 3 cubos consecutivos, 
+  - próxima jogada aumenta o número de 2 cubos consecutivos
+  - próxima jogada evita que o adversário aumente o número de 2 cubos consecutivos,
+  - por fim escolhe aleatoriamente
+
+Para avaliar o estado do jogo é utilizado o predicado value(+GameState, +Player, -Value) que segue a ordem descrita. Este predicado utiliza os predicados consecutive_cubes(+GameState, +Player, +N), responsável por verificar se um estado tem N cubos consecutivos do Player e possible_next_game_state(+GameState, +Player, -GameState) que é utilizado para obter o estado do jogo possível caso fosse o adversário a realizar a última jogada.
 
  >Jogada do Computador
+
+A escolha da jogada do computador é feita através do predicado choose_move(+GameState, +Level, -Move). No nível 1, o computador realiza uma jogada válida aleatória, enquanto que no nível 2, o computador segue um algoritmo ganancioso consoante o estado atual do jogo como foi descrito anteriormente.
+
+
+## Conclusões
+
+O jogo de tabuleiro 4Mation foi implementado com sucesso na linguagem PROLOG e tem todos os modos de jogos requeridos, incluindo os dois níveis de dificuldade do computador. A maior limitação que tivemos a desenvolver o trabalho foi na parte gráfica do jogo, uma vez que este jogo em específico tem poucas jogadas válidas em cada turno e seria mais interessante demonstrar isso com cores (e os próprios cubos também).
+
+Por fim, sentimos que a realização deste trabalho foi bastante útil para a aprendizagem da linguagem, visto que abordámos coisas diferentes das aulas práticas e aprofundamos temas anteriomente discutidos como a manipulação de listas e I/O.
+
+## Bibliografia
+
+- Regras do jogo: [4Mation](https://boardgamegeek.com/boardgame/329175/4mation)
+- Manual do SICStus: [HTML](https://sicstus.sics.se/sicstus/docs/latest4/html/sicstus.html/)
+- Diapositivos das aulas práticas de PFL

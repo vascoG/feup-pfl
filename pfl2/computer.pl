@@ -32,7 +32,11 @@ value(GameState, Player, 1):-
     game_over(OpponentGameState, Opponent),!.
 
 value(GameState, Player, 2):-
-    consecutive_cubes(GameState, Player, 3),!.
+    opponent(Player, Opponent),
+    count(consecutive_cubes(GameState,Player,3),Count1),
+    possible_next_game_state(GameState, Opponent, OpponentGameState),
+    count(consecutive_cubes(OpponentGameState,Player,3),Count2),
+    Count2 < Count1,!.
 
 value(GameState, Player, 3):-
     opponent(Player, Opponent),
@@ -42,7 +46,11 @@ value(GameState, Player, 3):-
     Count2 > Count1,!.
 
 value(GameState, Player, 4):-
-    consecutive_cubes(GameState, Player, 2),!.
+    opponent(Player, Opponent),
+    count(consecutive_cubes(GameState,Player,2),Count1),
+    possible_next_game_state(GameState, Opponent, OpponentGameState),
+    count(consecutive_cubes(OpponentGameState,Player,2),Count2),
+    Count2 < Count1,!.
 
 value(GameState, Player, 5):-
     opponent(Player, Opponent),
